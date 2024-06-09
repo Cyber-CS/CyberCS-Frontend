@@ -1,3 +1,6 @@
+import { Barcode, Info } from "@phosphor-icons/react";
+import { Button } from "~/components";
+
 function NewSearchPage() {
   return (
     <main className="bg-gray-700 flex-1 text-white w-full ">

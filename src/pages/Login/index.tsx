@@ -19,14 +19,19 @@ export default function LoginPage() {
 }
 
 export const LoginForm = () => {
-  const { mutate: login, isPending, isSuccess,status } = useLoginMutation();
+  const {
+    mutate: login,
+    isPending,
+    isSuccess,
+    status,
+    isError,
+  } = useLoginMutation();
   const {
     register,
     reset,
     formState: { errors },
     handleSubmit,
   } = useForm<LoginFields>({ resolver: zodResolver(loginSchema) });
-  const location = useLocation();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit(
@@ -38,13 +43,10 @@ export const LoginForm = () => {
   );
 
   useEffect(() => {
-    console.log("OXI",status);
     if (isSuccess) {
-      navigate("/seguranca");
+      navigate("/security");
     }
-    console.log("PPPPP ",isPending);
-
-  }, [isSuccess,status]);
+  }, [isSuccess, status]);
 
   if (isPending) return <Loading />;
 
@@ -71,6 +73,7 @@ export const LoginForm = () => {
         />
         <Button type="submit" label="Entrar" className="!bg-gray-200" />
       </form>
+      {isError && <p>Erro !!!!!!</p>}
       {/* <ModalErrorGeneric.Root
         defaultOpen={isError}
         onOpenChange={() =>

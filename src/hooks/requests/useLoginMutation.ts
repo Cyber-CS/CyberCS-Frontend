@@ -24,16 +24,16 @@ export function useLoginMutation() {
       const { data, error, response } = await api.POST("/login", {
         body: {
           username,
-          password
+          password,
         },
       });
       if (data) return data;
       throw { error, code: response.status };
     },
     onSuccess: (data) => {
-      console.log("oii",data);
-      setAccessToken((data as AuthResponse).access_token)},
-    onError: (error) => {
+      setAccessToken((data as AuthResponse).access_token);
+    },
+    onError: (error: ApiError) => {
       console.error(error);
     },
   });
