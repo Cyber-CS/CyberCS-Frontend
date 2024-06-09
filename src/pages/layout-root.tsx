@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from "react"
 import { Outlet, ScrollRestoration, useNavigate } from "react-router-dom"
-import { Footer, Header, Loading } from "../components"
+import { Footer, Header, Loading } from "../components/layouts"
 import { useLogout } from "../hooks/useLogout"
 import { useSession } from "../session"
 
@@ -23,7 +23,7 @@ export function RootLayout() {
 
   return (
     <div className="relative flex min-h-screen-d flex-col">
-      <Header onLogout={onLogout} showNavigation={authorized} />
+      <Header />
       <Suspense fallback={<Loading />} />
       <Outlet />
       <ScrollRestoration />

@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import "./index.css";
+import "./styles.css";
 
 import { SessionProvider } from "./session/SessionProvider.tsx";
 import { SecurityProvider } from "./security/SecurityProvider.tsx";

@@ -1,23 +1,21 @@
-import { useSession } from "@chronicles/react-hooks"
+import { Suspense, lazy } from "react";
+import { useSession } from "../session";
 
-import { Suspense, lazy } from "react"
-import { Loading } from "~/components"
-
-const LoginPage = lazy(() => import("./Login/index"))
-const HomePage = lazy(() => import("./Home/index"))
+const LoginPage = lazy(() => import("./Login/index"));
+const HomePage = lazy(() => import("./Home/index"));
 
 function IndexPage() {
-  const { authorized } = useSession()
+  const { authorized } = useSession();
 
   const renderPage = () => {
     if (!authorized) {
-      return <LoginPage />
+      return <LoginPage />;
     } else {
-      return <HomePage />
+      return <HomePage />;
     }
-  }
+  };
 
-  return <Suspense fallback={<Loading />}>{renderPage()}</Suspense>
+  return <Suspense fallback={<p>Carregando !</p> }>{renderPage()}</Suspense>;
 }
 
-export { IndexPage as Component }
+export { IndexPage as Component };
