@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button, Loading } from "~/components";
+import { Button, Input, Loading } from "~/components";
 import { useSearchMutation } from "~/hooks";
 
 function NewSearchPage() {
@@ -61,18 +61,14 @@ const SearchForm = () => {
 
   return (
     <form className="space-y-12 w-full flex flex-col" onSubmit={onSubmit}>
-      <fieldset className="flex gap-24 items-center">
-        <label className="text-nowrap" htmlFor="name">
-          Nome da varredura
-        </label>
-        <input
-          type="text"
-          id="name"
-          className="w-full p-12 rounded-8 bg-gray-500 placeholder:text-gray-50"
-          placeholder="Digite o nome de registro de sua nova varredura"
-          {...register("name")}
-        />
-      </fieldset>
+      <Input.SearchField
+        id="name"
+        label="Nome da varredura"
+        placeholder="Digite o nome de registro de sua nova varredura"
+        error={!!errors.name}
+        message={errors.name?.message}
+        {...register("name")}
+      />
       <fieldset>
         <label htmlFor="frequency">Frequência</label>
         <input
@@ -97,17 +93,62 @@ const SearchForm = () => {
         />
         <span>única</span>
       </fieldset>
-      <fieldset className="flex gap-24 items-start">
-        <label className="text-nowrap" htmlFor="search-content">
-          Insira sua pesquisa:
-        </label>
-        <textarea
-          id="search-content"
-          className="w-full min-h-148 max-h-148 p-12 rounded-8 bg-gray-500 placeholder:text-gray-50"
-          placeholder="Digite o conteúdo a ser procurado"
-          {...register("content")}
-        />
-      </fieldset>
+      <Input.SearchField
+        id="search-content"
+        label="Insira sua pesquisa"
+        placeholder="Digite o conteúdo a ser procurado"
+        error={!!errors.content}
+        message={errors.content?.message}
+        {...register("content")}
+      />
+      {/* //
+      // <fieldset className="flex gap-24 items-center">
+      //   <label className="text-nowrap" htmlFor="name">
+      //     Nome da varredura
+      //   </label>
+      //   <input
+      //     type="text"
+      //     id="name"
+      //     className="w-full p-12 rounded-8 bg-gray-500 placeholder:text-gray-50 outline-none"
+      //     placeholder="Digite o nome de registro de sua nova varredura"
+      //     {...register("name")}
+      //   />
+      // </fieldset>
+      // <fieldset>
+      //   <label htmlFor="frequency">Frequência</label>
+      //   <input
+      //     type="radio"
+      //     id="frequency"
+      //     value="daily"
+      //     {...register("frequency")}
+      //   />
+      //   <span>Diária</span>
+      //   <input
+      //     type="radio"
+      //     id="frequency"
+      //     value="weekly"
+      //     {...register("frequency")}
+      //   />
+      //   <span>Semanal</span>
+      //   <input
+      //     type="radio"
+      //     id="frequency"
+      //     value="unique"
+      //     {...register("frequency")}
+      //   />
+      //   <span>única</span>
+      // </fieldset>
+      // <fieldset className="flex gap-24 items-start">
+      //   <label className="text-nowrap" htmlFor="search-content">
+      //     Insira sua pesquisa:
+      //   </label>
+      //   <textarea
+      //     id="search-content"
+      //     className="w-full min-h-148 max-h-148 p-12 rounded-8 bg-gray-500 placeholder:text-gray-50 outline-none"
+      //     placeholder="Digite o conteúdo a ser procurado"
+      //     {...register("content")}
+      //   />
+      // </fieldset> */}
       <span className="w-full justify-end flex gap-12">
         <Info size={24} />
         Será enviado notificações ${`{diárias}`} para o email e sms cadastrados.

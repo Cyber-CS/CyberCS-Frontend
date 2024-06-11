@@ -70,6 +70,7 @@ export const LoginForm = () => {
           {...register("password")}
           error={!!errors.password}
           message={errors.password?.message}
+          type="password"
         />
         <Button type="submit" label="Entrar" className="!bg-gray-200" />
       </form>
