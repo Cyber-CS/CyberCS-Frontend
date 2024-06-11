@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "~/session";
 import { api } from "~/services";
+import { useCookieData } from "../useCookieData";
 interface ApiError {
   code: number;
   error: {
@@ -19,6 +20,7 @@ interface AuthResponse {
 }
 export function useLoginMutation() {
   const { setAccessToken } = useSession();
+  const {saveData} = useCookieData();
   const mutation = useMutation({
     mutationFn: async ({ username, password }: LoginFields) => {
       const { data, error, response } = await api.POST("/login", {
@@ -32,6 +34,7 @@ export function useLoginMutation() {
     },
     onSuccess: (data) => {
       setAccessToken((data as AuthResponse).access_token);
+      saveData("access_token", (data as AuthResponse).access_token);
     },
     onError: (error: ApiError) => {
       console.error(error);

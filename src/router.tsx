@@ -18,6 +18,10 @@ export const router = createBrowserRouter([
             path: "/new-search",
             lazy: () => import("./pages/NewSearch/index"),
           },
+          {
+            path: "/result/:searchId",
+            lazy: () => import("./pages/Result/index"),
+          },
         ],
       },
     ],
