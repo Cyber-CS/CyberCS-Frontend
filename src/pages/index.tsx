@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { useSession } from "../session";
+import { Loading } from "~/components";
 
 const LoginPage = lazy(() => import("./Login/index"));
 const HomePage = lazy(() => import("./Home/index"));
@@ -15,7 +16,7 @@ function IndexPage() {
     }
   };
 
-  return <Suspense fallback={<p>Carregando !</p> }>{renderPage()}</Suspense>;
+  return <Suspense fallback={<Loading /> }>{renderPage()}</Suspense>;
 }
 
 export { IndexPage as Component };

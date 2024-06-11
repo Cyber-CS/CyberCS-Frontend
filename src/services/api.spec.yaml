@@ -13,27 +13,38 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                password:
-                  type: string
-              required:
-                - username
-                - password
+              $ref: '#/components/schemas/LoginRequest'
       responses:
         '200':
           description: Successful login
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  token:
-                    type: string
+                $ref: '#/components/schemas/LoginResponse'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /search:
+    post:
+      summary: Search content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Bad Request
           content:
             application/json:
               schema:
@@ -55,6 +66,35 @@ components:
       properties:
         token:
           type: string
+    SearchRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        frequency:
+          type: string
+        content:
+          type: string
+      required:
+        - name
+        - frequency
+        - content
+    SearchResponse:
+      type: object
+      properties:
+        searchId:
+          type: string
+        response:
+          type: object
+          properties:
+            filePath:
+              type: string
+            codeContent:
+              type: string
+            repositoryName:
+              type: string
+            repositoryUrl:
+              type: string
     ErrorResponse:
       type: object
       properties:
