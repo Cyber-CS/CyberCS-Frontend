@@ -15,7 +15,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   const authorized = accessToken ? decode(accessToken).authorized : false
   const guest = !accessToken ? true : false
   const user = accessToken
-    ? { name: decode(accessToken).name, doc: decode(accessToken).doc as string }
+    ? { name: decode(accessToken).name}
     : {}
 
   return (

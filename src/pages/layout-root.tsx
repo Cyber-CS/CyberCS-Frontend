@@ -17,7 +17,6 @@ export function RootLayout() {
   };
 
   useEffect(() => {
-    console.log("RootLayout");
     if (!authorized) onLogout();
     //eslint-disable-next-line
   }, [authorized]);

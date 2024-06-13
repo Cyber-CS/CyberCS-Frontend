@@ -16,7 +16,7 @@ interface SearchFields {
 }
 
 export function useSearchMutation() {
-  const { saveData,retrieveData } = useStorageData();
+  const { saveData } = useStorageData();
   const mutation = useMutation({
     mutationKey: ["search"],
     mutationFn: async ({ name, frequency, content }: SearchFields) => {
@@ -31,9 +31,7 @@ export function useSearchMutation() {
       throw { error, code: response.status };
     },
     onSuccess: (data) => {
-        console.log("data ",data);
       saveData("search", data);
-      console.log("oii ",retrieveData("search"));
     },
     onError: (error: ApiError) => {
       console.error(error);

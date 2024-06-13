@@ -10,7 +10,7 @@ export const Header = ({
   showNavigation: boolean;
 }) => {
   return (
-    <header className="flex gap-48 bg-gray-700 text-white  border-b border-gray-100">
+    <header className="flex gap-48 bg-gray-150 text-white border-b border-white">
       <section className="container py-12 flex justify-between items-center">
         <Link to="/">
           <Logo />
@@ -31,7 +31,7 @@ export const Header = ({
                   className="hover:underline flex gap-12 font-bold"
                 >
                   <MagnifyingGlass size={24} />
-                  Nova busca
+                  Nova varredura
                 </Link>
               </li>
               <li>
