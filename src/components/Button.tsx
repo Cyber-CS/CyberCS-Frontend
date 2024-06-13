@@ -10,7 +10,8 @@ export const Button = ({ label, className, ...props }: ButtonProps) => {
     <button
       type="submit"
       className={cx([
-        "bg-gray-700 w-full p-12 mt-12  text-white rounded-8",
+        "bg-gray-700 w-full p-12 mt-12 text-white rounded-8",
+        "transition-colors duration-300",
         className,
       ])}
       {...props}
