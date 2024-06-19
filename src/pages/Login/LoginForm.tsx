@@ -62,7 +62,7 @@ export const LoginForm = () => {
           message={errors.password?.message}
           type="password"
         />
-        <Button type="submit" label="Entrar" className="!bg-gray-200" />
+        <Button type="submit" label="Entrar" className=" hover:bg-gray-800" />
       </form>
 
       <ModalErrorGeneric.Root

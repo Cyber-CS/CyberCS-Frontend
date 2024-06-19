@@ -71,7 +71,7 @@ const SearchForm = () => {
       />
       <div className="flex w-full items-center gap-12">
         <fieldset className="flex gap-24">
-          <label htmlFor="frequency">Frequência</label>
+          <label htmlFor="frequency" className="text-14 font-bold text-nowrap">Frequência de varredura</label>
           <div className="bg-gray-250 flex w-full rounded-12 px-12 gap-12">
             <div className="flex items-center gap-4">
               <input
@@ -103,7 +103,7 @@ const SearchForm = () => {
           </div>
         </fieldset>
         <fieldset className="flex gap-24 items-center w-full">
-          <label htmlFor="filter" className="text-nowrap">
+          <label htmlFor="filter" className="text-nowrap text-14 font-bold">
             Tipo de procura
           </label>
           <select
