@@ -56,7 +56,7 @@ export const LoginField = forwardRef<HTMLInputElement, InputProps>(
             className={cx([
               "bg-gray-600 p-4 rounded-4 text-white outline-none",
               "placeholder:text-gray-50 placeholder:font-medium placeholder:px-4",
-              "hover:bg-gray-700 transition-colors duration-300",
+              "hover:bg-gray-700 transition-colors duration-700",
               { "border border-red-500 focus-within:border-red-500": error },
             ])}
             {...props}
@@ -121,7 +121,10 @@ export const SearchField = forwardRef<HTMLInputElement, InputProps>(
           />
         </fieldset>
         <span
-          className={cx(["text-12 w-full block text-right mt-12", { "text-red-500": error }])}
+          className={cx([
+            "text-12 w-full block text-right mt-12",
+            { "text-red-500": error },
+          ])}
         >
           {message}
         </span>
@@ -181,7 +184,10 @@ export const TextAreaField = forwardRef<HTMLTextAreaElement, InputProps>(
           />
         </fieldset>
         <span
-          className={cx(["text-12 w-full block text-right mt-12", { "text-red-500": error }])}
+          className={cx([
+            "text-12 w-full block text-right mt-12",
+            { "text-red-500": error },
+          ])}
         >
           {message}
         </span>

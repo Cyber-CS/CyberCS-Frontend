@@ -1,14 +1,34 @@
 import { Flower, Info } from "@phosphor-icons/react";
-import { useStorageData } from "~/hooks";
+import { useLocation } from "react-router-dom";
+import { Loading } from "~/components";
+import { useResultQuery } from "~/hooks";
 import { BitbucketLogo, GithubLogo } from "~/icons";
-import { ResultData } from "~/types";
+import CryptoJS from "crypto-js";
 
 function ResultPage() {
-  const { retrieveData } = useStorageData();
-  const searchCookie = retrieveData("search");
-  const searchData = searchCookie
-    ? (searchCookie.response as ResultData[])
+  const pathname = useLocation();
+  const id = pathname.pathname.split("/")[2];
+  function escapeRegExp(string: string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  const { data: dataResult, isFetching: isFetchingResult } = useResultQuery({
+    searchId: id,
+  });
+
+  const decryptArray = (encryptedData: string, secretKey: string) => {
+    const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
+    const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
+    console.log(encryptedData);
+    return JSON.parse(decryptedString);
+  };
+
+  const searchData = dataResult
+    ? decryptArray(dataResult.response[0], "a")
     : [];
+
+  if (isFetchingResult) return <Loading />;
+
   return (
     <main className="bg-gray-150 flex-1 text-white w-full">
       <div className="container flex flex-col gap-48 py-32">
@@ -16,7 +36,7 @@ function ResultPage() {
           <Flower size={48} />
           <article>
             <h1 className="text-24 font-semibold">Resultados de varredura</h1>
-            <h2>{`${searchData.length}`} resultados encontrados</h2>
+            <h2>{`${searchData.length} `} resultados encontrados</h2>
           </article>
         </section>
         <section className="w-full h-full bg-gray-100 rounded-8 p-24 flex flex-col gap-32">
@@ -31,6 +51,12 @@ function ResultPage() {
                 </p>
               </span>
             </div>
+            <h3 className="text-14 mb-12 space-x-8">
+              <span>Resultados para string: </span>
+              <span className="text-18 break-all font-semibold">
+                {dataResult?.content}
+              </span>
+            </h3>
             <div className="flex items-center px-20 py-12 bg-gray-50 rounded-12 mb-12">
               {searchData.length > 0 ? (
                 <>
@@ -48,18 +74,23 @@ function ResultPage() {
                 </>
               ) : (
                 <p className="font-semibold">
-                  Nenhum arquivo foi encontrado para a sua busca
+                  Nenhum arquivo ou vazamento foi encontrado para a sua busca
                 </p>
               )}
             </div>
             <div className=" space-y-48">
               {searchData.map((data, index) => {
                 let replacedContent = data.codeContent;
-                data.maliciousIntent.map((intent) => {
-                  const match = intent.match || "";
+                console.log(dataResult.content);
+                replacedContent = replacedContent.replace(
+                  new RegExp(escapeRegExp(dataResult?.content as string), "g"),
+                  `<span class="!bg-blue-300 text-white">${dataResult?.content}</span>`
+                );
+                data.maliciousIntent.map((intent, index) => {
+                  const match = (intent.match as string) || "";
                   replacedContent = replacedContent.replace(
-                    new RegExp(match, "g"),
-                    `<span class="bg-red-500 text-white">${match}</span>`
+                    new RegExp(escapeRegExp(match), "g"),
+                    `<span class="bg-red-500 text-white"><span class="!bg-orange-300"> ${index + 1}.</span> ${match}</span>`
                   );
                 });
                 return (
@@ -82,12 +113,29 @@ function ResultPage() {
                             {data.repositoryName}
                           </span>
                         </h4>
-                        <h4 className="flex gap-12 text-gray-900 p-12">
+                        <h4 className="flex gap-12 text-gray-900 p-12 border-b border-gray-700">
                           <span className="font-semibold">Link:</span>
                           <span className="break-all">
                             {data.repositoryUrl}
                           </span>
                         </h4>
+                        <div className="space-y-12 text-gray-900 p-12 ">
+                          <p className="font-semibold">
+                            Tipo de ameaças encontradas:
+                          </p>
+                          <ul className="space-y-4">
+                            {data.maliciousIntent.map((intent, index) => {
+                              return (
+                                <li
+                                  key={index}
+                                  className="border font-semibold text-gray-700 border-orange-300 px-12 py-2 rounded-8 break-all w-fit"
+                                >
+                                  {index + 1}º {intent.description}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
                       </li>
 
                       <li>
@@ -99,7 +147,11 @@ function ResultPage() {
                         </h4>
                         <div className="bg-gray-900 rounded-8 rounded-t-none p-12 text-14 overflow-y-auto max-h-[300px]">
                           <pre>
-                            <code dangerouslySetInnerHTML={{ __html: replacedContent }} />
+                            <code
+                              dangerouslySetInnerHTML={{
+                                __html: replacedContent,
+                              }}
+                            />
                           </pre>
                         </div>
                       </li>
