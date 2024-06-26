@@ -1,9 +1,24 @@
-import { Flower, Info } from "@phosphor-icons/react";
+import {
+  ArrowsOutSimple,
+  FileDashed,
+  Flower,
+  IdentificationCard,
+  Info,
+  Link as LinkIcon,
+} from "@phosphor-icons/react";
 import { useLocation } from "react-router-dom";
 import { Loading } from "~/components";
 import { useResultQuery } from "~/hooks";
 import { BitbucketLogo, GithubLogo } from "~/icons";
 import CryptoJS from "crypto-js";
+
+type SearchDataProps = {
+  repositoryName: string;
+  repositoryUrl: string;
+  filePath: string;
+  codeContent: string;
+  maliciousIntent: { match: string; description: string }[];
+};
 
 function ResultPage() {
   const pathname = useLocation();
@@ -19,13 +34,12 @@ function ResultPage() {
   const decryptArray = (encryptedData: string, secretKey: string) => {
     const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
     const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
-    console.log(encryptedData);
     return JSON.parse(decryptedString);
   };
 
-  const searchData = dataResult
-    ? decryptArray(dataResult.response[0], "a")
-    : [];
+  const searchData = (
+    dataResult ? decryptArray(dataResult.response[0], "a") : []
+  ) as SearchDataProps[];
 
   if (isFetchingResult) return <Loading />;
 
@@ -81,7 +95,6 @@ function ResultPage() {
             <div className=" space-y-48">
               {searchData.map((data, index) => {
                 let replacedContent = data.codeContent;
-                console.log(dataResult.content);
                 replacedContent = replacedContent.replace(
                   new RegExp(escapeRegExp(dataResult?.content as string), "g"),
                   `<span class="!bg-blue-300 text-white">${dataResult?.content}</span>`
@@ -100,25 +113,29 @@ function ResultPage() {
                       {data.repositoryUrl.includes("bitbucket") ? (
                         <BitbucketLogo />
                       ) : (
-                        <GithubLogo />
+                        <GithubLogo className="w-100" />
                       )}
                     </h3>
                     <ul className="space-y-16 ">
                       <li className="bg-gray-50 rounded-8">
-                        <h4 className=" flex gap-12 text-gray-900  p-12 border-b border-gray-700">
-                          <span className="font-semibold">
-                            Nome do repositório:
-                          </span>
-                          <span className="break-all">
-                            {data.repositoryName}
-                          </span>
-                        </h4>
-                        <h4 className="flex gap-12 text-gray-900 p-12 border-b border-gray-700">
-                          <span className="font-semibold">Link:</span>
-                          <span className="break-all">
-                            {data.repositoryUrl}
-                          </span>
-                        </h4>
+                        <div className=" flex gap-8 text-gray-900 p-12 border-b border-gray-700">
+                          <IdentificationCard size={24} />
+                          <div className="flex gap-8">
+                            <p className="font-semibold">
+                              Nome do repositório:
+                            </p>
+                            <h4 className="break-all">{data.repositoryName}</h4>
+                          </div>
+                        </div>
+                        <div className="flex gap-8 text-gray-900 p-12 border-b border-gray-700">
+                          <div className="flex gap-8">
+                            <LinkIcon size={24} />
+                            <span className="font-semibold">Link:</span>
+                            <span className="break-all">
+                              {data.repositoryUrl}
+                            </span>
+                          </div>
+                        </div>
                         <div className="space-y-12 text-gray-900 p-12 ">
                           <p className="font-semibold">
                             Tipo de ameaças encontradas:
@@ -139,12 +156,19 @@ function ResultPage() {
                       </li>
 
                       <li>
-                        <h4 className="flex items-center gap-12 bg-gray-50 text-gray-900 rounded-8 rounded-b-none p-12">
-                          <span className="font-bold ">Arquivo encontrado</span>
-                          <span>
-                            <code className="break-all">{data.filePath}</code>
-                          </span>
-                        </h4>
+                        <div className="flex justify-between bg-gray-50 text-gray-900 rounded-8 rounded-b-none p-12">
+                          <div className="flex">
+                            <FileDashed size={24} className="mr-4" />
+                            <p className="font-bold mr-12">
+                              Arquivo encontrado
+                            </p>
+                            <h4>
+                              <code className="break-all">{data.filePath}</code>
+                            </h4>
+                          </div>
+                          <ArrowsOutSimple size={24} />
+                        </div>
+
                         <div className="bg-gray-900 rounded-8 rounded-t-none p-12 text-14 overflow-y-auto max-h-[300px]">
                           <pre>
                             <code

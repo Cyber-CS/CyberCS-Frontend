@@ -49,6 +49,28 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /result:
+    get:
+      summary: Get search result
+      parameters:
+        - in: query
+          name: searchId
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Successful result retrieval
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResultResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     LoginRequest:
@@ -104,6 +126,27 @@ components:
                     type: string
                   type:
                     type: string
+    ResultResponse:
+      type: object
+      properties:
+        content:
+          type: string
+        filters:
+          type: array
+          items:
+            type: string
+        frequency:
+          type: string
+        name:
+          type: string
+        registerDate:
+          type: string
+        response:
+          type: array
+          items:
+            type: string
+        _id:
+          type: string
     ErrorResponse:
       type: object
       properties:
