@@ -2,10 +2,16 @@ import { cx } from "class-variance-authority";
 import { ComponentPropsWithRef } from "react";
 
 type ButtonProps = {
-  label: string;
+  label?: string;
+  children?: React.ReactNode;
 } & ComponentPropsWithRef<"button">;
 
-export const Button = ({ label, className, ...props }: ButtonProps) => {
+export const Button = ({
+  label,
+  className,
+  children,
+  ...props
+}: ButtonProps) => {
   return (
     <button
       type="submit"
@@ -16,6 +22,7 @@ export const Button = ({ label, className, ...props }: ButtonProps) => {
       ])}
       {...props}
     >
+      {children}
       {label}
     </button>
   );

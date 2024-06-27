@@ -22,14 +22,14 @@ export default {
             marginLeft: "auto",
             marginRight: "auto",
             width: "100%",
-            maxWidth: "1280px",
+            maxWidth: "1580px",
           },
         },
         {
           "@media (min-width: 1024px) ": {
             ".container": {
-              paddingLeft: "8.75rem",
-              paddingRight: "8.75rem",
+              paddingLeft: "5rem",
+              paddingRight: "5rem",
             },
           },
         },
@@ -57,6 +57,7 @@ export default {
     },
     fontFamily: {
       sans: ["IBM Plex Sans", "sans-serif"],
+      mono: ["PT Mono", "monospace"],
     },
     colors: {
       transparent: "transparent",
@@ -86,6 +87,7 @@ export default {
         300: "#d57d15",
       },
       blue: {
+        100: "#bbdaff",
         300: "#09b5ad",
       
       }
