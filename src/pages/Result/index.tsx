@@ -1,31 +1,69 @@
-import { Flower, Info } from "@phosphor-icons/react";
+import {
+  ArrowsOutSimple,
+  FileDashed,
+  Flower,
+  IdentificationCard,
+  Info,
+  Link as LinkIcon,
+} from "@phosphor-icons/react";
 import { useLocation } from "react-router-dom";
-import { Loading } from "~/components";
+import { Button, Loading } from "~/components";
 import { useResultQuery } from "~/hooks";
 import { BitbucketLogo, GithubLogo } from "~/icons";
 import CryptoJS from "crypto-js";
+import { cx } from "class-variance-authority";
+import { useState } from "react";
+import { CodeModal } from "./CodeModal";
+import { ModalGeneric } from "~/components/Dialog";
+
+type SearchDataProps = {
+  repositoryName: string;
+  repositoryUrl: string;
+  filePath: string;
+  codeContent: string;
+  maliciousIntent: { match: string; description: string }[];
+};
+
+type CodeDataState = {
+  code: string;
+  fileName: string;
+};
 
 function ResultPage() {
+  const [openCodeModal, setOpenCodeModal] = useState<boolean>(false);
+  const [dataCodeModal, setDataCodeModal] = useState<CodeDataState>({
+    code: "",
+    fileName: "",
+  });
+
   const pathname = useLocation();
   const id = pathname.pathname.split("/")[2];
-  function escapeRegExp(string: string) {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  }
 
   const { data: dataResult, isFetching: isFetchingResult } = useResultQuery({
     searchId: id,
   });
 
+  function escapeRegExp(string: string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
   const decryptArray = (encryptedData: string, secretKey: string) => {
     const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
     const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
-    console.log(encryptedData);
     return JSON.parse(decryptedString);
   };
 
-  const searchData = dataResult
-    ? decryptArray(dataResult.response[0], "a")
-    : [];
+  const searchData = (
+    dataResult ? decryptArray(dataResult.response[0], "a") : []
+  ) as SearchDataProps[];
+
+  const handleOpenCodeModal = (index: number) => {
+    setOpenCodeModal((prev) => !prev);
+    setDataCodeModal({
+      code: searchData[index].codeContent,
+      fileName: searchData[index].filePath,
+    });
+  };
 
   if (isFetchingResult) return <Loading />;
 
@@ -69,7 +107,7 @@ function ResultPage() {
                     ).length > 0 && <BitbucketLogo />}
                     {searchData.filter((data) =>
                       data.repositoryUrl.includes("github")
-                    ).length > 0 && <GithubLogo />}
+                    ).length > 0 && <GithubLogo className="w-100" />}
                   </div>
                 </>
               ) : (
@@ -81,7 +119,6 @@ function ResultPage() {
             <div className=" space-y-48">
               {searchData.map((data, index) => {
                 let replacedContent = data.codeContent;
-                console.log(dataResult.content);
                 replacedContent = replacedContent.replace(
                   new RegExp(escapeRegExp(dataResult?.content as string), "g"),
                   `<span class="!bg-blue-300 text-white">${dataResult?.content}</span>`
@@ -100,25 +137,29 @@ function ResultPage() {
                       {data.repositoryUrl.includes("bitbucket") ? (
                         <BitbucketLogo />
                       ) : (
-                        <GithubLogo />
+                        <GithubLogo className="w-100" />
                       )}
                     </h3>
                     <ul className="space-y-16 ">
                       <li className="bg-gray-50 rounded-8">
-                        <h4 className=" flex gap-12 text-gray-900  p-12 border-b border-gray-700">
-                          <span className="font-semibold">
-                            Nome do repositório:
-                          </span>
-                          <span className="break-all">
-                            {data.repositoryName}
-                          </span>
-                        </h4>
-                        <h4 className="flex gap-12 text-gray-900 p-12 border-b border-gray-700">
-                          <span className="font-semibold">Link:</span>
-                          <span className="break-all">
-                            {data.repositoryUrl}
-                          </span>
-                        </h4>
+                        <div className=" flex gap-8 text-gray-900 p-12 border-b border-gray-700">
+                          <IdentificationCard size={24} />
+                          <div className="flex gap-8">
+                            <p className="font-semibold">
+                              Nome do repositório:
+                            </p>
+                            <h4 className="break-all">{data.repositoryName}</h4>
+                          </div>
+                        </div>
+                        <div className="flex gap-8 text-gray-900 p-12 border-b border-gray-700">
+                          <div className="flex gap-8">
+                            <LinkIcon size={24} />
+                            <span className="font-semibold">Link:</span>
+                            <span className="break-all">
+                              {data.repositoryUrl}
+                            </span>
+                          </div>
+                        </div>
                         <div className="space-y-12 text-gray-900 p-12 ">
                           <p className="font-semibold">
                             Tipo de ameaças encontradas:
@@ -139,12 +180,36 @@ function ResultPage() {
                       </li>
 
                       <li>
-                        <h4 className="flex items-center gap-12 bg-gray-50 text-gray-900 rounded-8 rounded-b-none p-12">
-                          <span className="font-bold ">Arquivo encontrado</span>
-                          <span>
-                            <code className="break-all">{data.filePath}</code>
-                          </span>
-                        </h4>
+                        <div className="flex flex-row items-center justify-between bg-gray-50 text-gray-900 rounded-8 rounded-b-none p-12">
+                          <div className="flex">
+                            <FileDashed size={24} className="mr-4" />
+                            <p className="font-bold mr-12">
+                              Arquivo encontrado
+                            </p>
+                            <h4>
+                              <code className="break-all">{data.filePath}</code>
+                            </h4>
+                          </div>
+                          <Button
+                            onClick={() => handleOpenCodeModal(index)}
+                            className={cx([
+                              "!w-fit !bg-gray-150 flex justify-end !m-0 p-4 relative",
+                              "after:content-[attr(data-content)] after:text-nowrap after:text-12",
+                              "after:absolute after:top-[20%] after:right-40",
+                              "after:opacity-0 hover:after:opacity-100 after:bg-gray-900",
+                              "after:rounded-full after:px-12 after:py-2 after:text-white ",
+                              "after:duration-200 after:transition-opacity",
+                              "before:content-[''] before:absolute before:top-[35%] before:right-[calc(100%+4px)]",
+                              "before:border-t-[7px] before:border-t-transparent before:border-b-[7px] before:border-b-transparent",
+                              "before:border-l-[7px] before:border-l-gray-900 before:opacity-0 hover:before:opacity-100",
+                              "before:transition-opacity before:duration-200",
+                            ])}
+                            data-content={"Clique para ver o arquivo expandido"}
+                          >
+                            <ArrowsOutSimple size={24} />
+                          </Button>
+                        </div>
+
                         <div className="bg-gray-900 rounded-8 rounded-t-none p-12 text-14 overflow-y-auto max-h-[300px]">
                           <pre>
                             <code
@@ -163,6 +228,12 @@ function ResultPage() {
           </article>
         </section>
       </div>
+      <ModalGeneric.Root
+        open={openCodeModal}
+        onOpenChange={() => setOpenCodeModal((prev) => !prev)}
+      >
+        <CodeModal {...dataCodeModal} />
+      </ModalGeneric.Root>
     </main>
   );
 }

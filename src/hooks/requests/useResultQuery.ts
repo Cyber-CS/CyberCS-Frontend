@@ -5,6 +5,16 @@ interface Params {
   searchId: string;
 }
 
+interface Result {
+  content: string;
+  filters: string[];
+  frequency: string;
+  name: string;
+  registerDate: string;
+  response: string[];
+  _id: string;
+}
+
 export function useResultQuery({ searchId }: Params) {
   const query = useQuery({
     refetchOnWindowFocus: false,
@@ -20,7 +30,7 @@ export function useResultQuery({ searchId }: Params) {
         },
       });
       if (data) {
-        return data;
+        return data as Result;
       }
       throw { error, code: response.status };
     },
