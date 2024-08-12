@@ -40,6 +40,11 @@ export default {
     extend: {
       animation: {
         shake: "shake 250ms",
+        anim: "anim 1s",
+        popIn: "popIn 300ms ease-in-out",
+        popOut: "popOut 300ms ease-in-out",
+        slideIn: 'slideIn 350ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideOut: 'slideOut 350ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
         shake: {
@@ -52,6 +57,34 @@ export default {
           "80%": {
             transform: "translateX(5px)",
           },
+        },
+        anim: {
+          "0%": {
+            transform: "translateY(0) rotate(0)",
+            opacity: "0",
+            borderRadius: "35%",
+          },
+          "100%": {
+            transform: " translateY(-125rem) rotate(1360deg)",
+            opacity: "1",
+            borderRadius: "40%",
+          },
+        },
+        popIn: {
+          from: { transform: "translateY(0.5)", opacity: "0" },
+          to: { transform: "translateY(1)", opacity: "1" },
+        },
+        popOut: {
+          from: { transform: "translateY(1)", opacity: "1" },
+          to: { transform: "translateY(0.5)", opacity: "0" },
+        },
+        slideIn: {
+          from: { transform: "translateY(12px)" },
+          to: { transform: "translateY(0)" },
+        },
+        slideOut: {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(100px)" },
         },
       },
     },
@@ -89,8 +122,7 @@ export default {
       blue: {
         100: "#bbdaff",
         300: "#09b5ad",
-      
-      }
+      },
     },
   },
 } satisfies Config;

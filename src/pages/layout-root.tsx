@@ -22,7 +22,7 @@ export function RootLayout() {
   }, [authorized]);
 
   return (
-    <div className="relative flex min-h-screen-d flex-col">
+    <div className="relative flex min-h-screen-d flex-col bg-gray-150">
       <Header onLogout={onLogout} showNavigation={authorized} />
       <Suspense fallback={<Loading />} />
       <Outlet />

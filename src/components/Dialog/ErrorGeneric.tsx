@@ -9,7 +9,7 @@ type ContentProps = ModalGeneric.DialogContentProps & {
 };
 
 export const Content = ({ description, title, onClose }: ContentProps) => (
-  <ModalGeneric.Content className="flex w-full max-w-360 flex-col gap-20 data-[state=closed]:animate-popOut data-[state=open]:animate-popIn lg:max-w-[25rem]">
+  <ModalGeneric.Content className="flex w-full max-w-360 flex-col gap-20 data-[state=closed]:animate-popOut data-[state=open]:animate-popIn lg:max-w-[25rem] duration-700">
     <div>
       <div className="flex w-full items-center justify-center">
         <Info className="h-56 w-56 text-pink-300" />
