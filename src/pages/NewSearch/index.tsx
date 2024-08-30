@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Button, Input, Loading } from "~/components";
 import { useSearchMutation } from "~/hooks";
+import { useSession } from "~/session";
 
 function NewSearchPage() {
   return (
@@ -28,6 +29,7 @@ function NewSearchPage() {
 
 const SearchForm = () => {
   const navigate = useNavigate();
+  const { user } = useSession();
   const {
     mutate: newSearch,
     data,
@@ -38,6 +40,7 @@ const SearchForm = () => {
 
   const {
     register,
+    setValue,
     reset,
     formState: { errors },
     handleSubmit,
@@ -52,6 +55,7 @@ const SearchForm = () => {
   );
 
   useEffect(() => {
+    setValue("userId", user.id as string);
     if (isSuccess) {
       navigate(`/result/${data.searchId}`);
     }
@@ -71,7 +75,9 @@ const SearchForm = () => {
       />
       <div className="flex w-full items-center gap-12">
         <fieldset className="flex gap-24">
-          <label htmlFor="frequency" className="text-14 font-bold text-nowrap">Frequência de varredura</label>
+          <label htmlFor="frequency" className="text-14 font-bold text-nowrap">
+            Frequência de varredura
+          </label>
           <div className="bg-gray-250 flex w-full rounded-12 px-12 gap-12">
             <div className="flex items-center gap-4">
               <input
@@ -127,7 +133,8 @@ const SearchForm = () => {
       />
       <span className="w-full justify-end flex gap-12 text-14">
         <Info size={24} />
-        Ao cadastrar uma nova varredura, notificações serão enviadas para o usuário via e-mail e sms.
+        Ao cadastrar uma nova varredura, notificações serão enviadas para o
+        usuário via e-mail e sms.
       </span>
 
       <Button label="Realizar nova varredura" className="hover:bg-gray-800" />
@@ -136,6 +143,7 @@ const SearchForm = () => {
 };
 
 const searchSchema = z.object({
+  userId: z.string().nonempty("Usuário não pode ser vazio"),
   name: z.string().nonempty("Nome da varredura não pode ser vazio"),
   frequency: z.string().nonempty("Frequência não pode ser vazia"),
   content: z.string().nonempty("Conteúdo não pode ser vazio"),
