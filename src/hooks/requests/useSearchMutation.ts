@@ -12,7 +12,6 @@ interface ApiError {
 interface SearchFields {
   userId: string;
   name: string;
-  frequency: string;
   content: string;
 }
 
@@ -20,12 +19,11 @@ export function useSearchMutation() {
   const { saveData } = useStorageData();
   const mutation = useMutation({
     mutationKey: ["search"],
-    mutationFn: async ({ userId, name, frequency, content }: SearchFields) => {
+    mutationFn: async ({ userId, name, content }: SearchFields) => {
       const { data, error, response } = await api.POST("/search", {
         body: {
           userId,
           name,
-          frequency,
           content,
         },
       });

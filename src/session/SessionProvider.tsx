@@ -10,6 +10,7 @@ type AccessTokenPayload = Required<JWTPayload> & {
   role: string;
   username: string;
   id: string;
+  email: string;
 };
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
@@ -26,6 +27,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         name: decode(accessToken).name,
         id: decode(accessToken).sub,
         role: decode(accessToken).role,
+        email: decode(accessToken).email,
       }
     : {};
 

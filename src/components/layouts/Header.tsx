@@ -20,23 +20,24 @@ export const Header = ({
     {
       icon: <UserCircle size={24} />,
       to: "/profile",
-      tip: "Perfil",
+      tip: "hover:after:content-['Perfil']",
     },
 
     {
       icon: <House size={24} />,
       to: "/",
-      tip: "Início",
+      tip: "hover:after:content-['Início']",
+
     },
     {
       icon: <MagnifyingGlass size={24} />,
       to: "/new-search",
-      tip: "Nova busca",
+      tip: "hover:after:content-['Varredura']",
     },
     {
       icon: <SignOut size={24} />,
       to: "#",
-      tip: "Sair",
+      tip: "hover:after:content-['Sair']",
       onClick: onLogout,
     },
   ];
@@ -56,10 +57,10 @@ export const Header = ({
                     to={to}
                     className={cx([
                       "relative hover:bg-gray-600 p-6 rounded-full flex gap-12 font-bold hover:bg-blend-soft-light",
-                      "hover:after:absolute hover:after:p-12",
-                      " hover:after:bg-gray-600/40 hover:after:rounded-full ",
-                      "hover:after:top-24 hover:after:left-1/2 hover:after:z-1",
-                      `hover:after:content-['${tip}']`,
+                      "hover:after:absolute hover:after:px-12 hover:after:py-2",
+                      "hover:after:bg-gray-600/40 hover:after:rounded-full ",
+                      "hover:after:top-36 hover:after:-right-1/2 hover:after:z-1",
+                      tip
                     ])}
                     onClick={onClick}
                   >
