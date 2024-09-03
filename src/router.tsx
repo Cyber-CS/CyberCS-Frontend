@@ -23,6 +23,10 @@ export const router = createBrowserRouter([
             lazy: () => import("./pages/Result/index"),
           },
           {
+            path: "/profile",
+            lazy: () => import("./pages/Profile/index"),
+          },
+          {
             path: "/register",
             lazy: () => import("./pages/Cadastro/UserRegistration"),
           },
