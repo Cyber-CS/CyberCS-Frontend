@@ -9,7 +9,7 @@ import {
 import { Logo } from "~/icons";
 import { Link } from "~/components";
 import { cx } from "class-variance-authority";
-import { useSession } from "~/session"; // Importar hook para acessar a sessão do usuário
+import { useSession } from "~/session";
 
 export const Header = ({
   onLogout,
@@ -18,7 +18,7 @@ export const Header = ({
   onLogout: () => void;
   showNavigation: boolean;
 }) => {
-  const { user } = useSession(); // Obter informações da sessão do usuário
+  const { user } = useSession(); 
 
   const info = [
     {

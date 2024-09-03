@@ -8,7 +8,7 @@ export default function HomePage() {
   const { user } = useSession();
   return (
     <main className="bg-gray-150 flex-1 text-white w-full ">
-      <div className="container flex flex-col gap-48 items-center py-72">
+      <div className="container flex flex-col gap-48 items-center ">
         <section className="w-full flex gap-12 items-center py-12 border-b border-white">
           <AppWindow size={48} />
           <article>

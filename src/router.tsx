@@ -28,11 +28,11 @@ export const router = createBrowserRouter([
           },
           {
             path: "/register",
-            lazy: () => import("./pages/Cadastro/UserRegistration"),
+            lazy: () => import("./pages/Register/index"),
           },
           {
             path: "/user-management",
-            lazy: () => import("./pages/UserManagement/UserManagement"),
+            lazy: () => import("./pages/UserManagement/index"),
           },
         ],
       },

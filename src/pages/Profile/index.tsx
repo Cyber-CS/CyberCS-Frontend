@@ -41,7 +41,7 @@ function ProfilePage() {
     <main className="bg-gray-150 flex-1 text-white w-full flex">
       <section className="container flex flex-col">
         <article className="flex w-full justify-between">
-          <div className="max-h-[85px] w-full flex gap-12 items-center py-12 border-b border-white ">
+          <div className="max-h-[85px] w-full flex gap-12 items-center py-12 border-b border-white mb-24">
             <User size={48} />
             <article>
               <h1 className="text-24 font-semibold">Perfil</h1>

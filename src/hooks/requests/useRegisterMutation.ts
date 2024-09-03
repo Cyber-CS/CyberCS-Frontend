@@ -18,7 +18,7 @@ export function useRegisterMutation() {
           name,
           email,
           password,
-          role, // Passando o role para a API
+          role, 
         },
       });
       if (data) return data;
