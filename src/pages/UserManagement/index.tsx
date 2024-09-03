@@ -1,4 +1,4 @@
-import { User } from "@phosphor-icons/react";
+import { Gear } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Loading } from "~/components";
@@ -61,7 +61,7 @@ function UserManagement() {
     <main className="flex flex-col flex-1 bg-gray-250">
       <section className="container">
         <div className="py-12 text-white flex items-center border-b border-white mb-24">
-        <User size={48} />
+          <Gear size={48} />
           <div className="ps-12 ">
             <h1 className="text-24 font-semibold">Gerenciamento de Usuários</h1>
             <h2>Lista de usuários registrados no sistema</h2>

@@ -1,9 +1,9 @@
 import {
+  Gear,
   House,
   Info,
   MagnifyingGlass,
   SignOut,
-  User,
   UserCircle,
 } from "@phosphor-icons/react";
 import { Logo } from "~/icons";
@@ -18,7 +18,7 @@ export const Header = ({
   onLogout: () => void;
   showNavigation: boolean;
 }) => {
-  const { user } = useSession(); 
+  const { user } = useSession();
 
   const info = [
     {
@@ -66,7 +66,7 @@ export const Header = ({
                       "hover:after:content-['Gerenciamento_de_usuários']",
                     ])}
                   >
-                    <User size={24} />
+                    <Gear size={24} />
                   </Link>
                 </li>
               )}
