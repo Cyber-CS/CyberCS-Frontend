@@ -22,6 +22,18 @@ export const router = createBrowserRouter([
             path: "/result/:searchId",
             lazy: () => import("./pages/Result/index"),
           },
+          {
+            path: "/profile",
+            lazy: () => import("./pages/Profile/index"),
+          },
+          {
+            path: "/register",
+            lazy: () => import("./pages/Register/index"),
+          },
+          {
+            path: "/user-management",
+            lazy: () => import("./pages/UserManagement/index"),
+          },
         ],
       },
     ],

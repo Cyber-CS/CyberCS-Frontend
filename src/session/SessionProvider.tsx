@@ -1,22 +1,35 @@
-import { decodeJwt, type JWTPayload } from "jose"
-import type { ReactNode } from "react"
+import { decodeJwt, type JWTPayload } from "jose";
+import type { ReactNode } from "react";
 
+import { SessionContext } from "./SessionContext";
+import { useCookieState } from "~/hooks";
 
-import { SessionContext } from "./SessionContext"
-import { useCookieState } from "../hooks/useCookieState";
-
-type AccessTokenPayload = Required<JWTPayload> & { authorized: boolean; name: string }
+type AccessTokenPayload = Required<JWTPayload> & {
+  authorized: boolean;
+  name: string;
+  role: string;
+  username: string;
+  id: string;
+  email: string;
+};
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
-  const [accessToken, setAccessToken, clearAccessToken] = useCookieState<string>("_access_token")
+  const [accessToken, setAccessToken, clearAccessToken] =
+    useCookieState<string>("_access_token");
 
-  const decode = (jwt: string) => decodeJwt(jwt) as AccessTokenPayload
+  const decode = (jwt: string) => decodeJwt(jwt) as AccessTokenPayload;
 
-  const authorized = accessToken ? decode(accessToken).authorized : false
-  const guest = !accessToken ? true : false
+  const authorized = accessToken ? decode(accessToken).authorized : false;
+  const guest = !accessToken ? true : false;
   const user = accessToken
-    ? { name: decode(accessToken).name}
-    : {}
+    ? {
+        username: decode(accessToken).username,
+        name: decode(accessToken).name,
+        id: decode(accessToken).sub,
+        role: decode(accessToken).role,
+        email: decode(accessToken).email,
+      }
+    : {};
 
   return (
     <SessionContext.Provider
@@ -37,5 +50,5 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     >
       {children}
     </SessionContext.Provider>
-  )
-}
+  );
+};

@@ -1,15 +1,20 @@
-import { createContext } from "react"
+import { createContext } from "react";
 
 type SessionContextType = {
-  accessToken?: string
+  accessToken?: string;
+  authorized: boolean;
+  guest: boolean;
+  user: {
+    username?: string;
+    id?: string;
+    name?: string;
+    email?: string;
+    role?: string;
+  };
 
-  authorized: boolean
-  guest: boolean
-  user: { name?: string, doc?: string }
-
-  setAccessToken: (accessToken: string) => void
-  clearSession: () => void
-}
+  setAccessToken: (accessToken: string) => void;
+  clearSession: () => void;
+};
 
 const INITIAL_STATE: SessionContextType = {
   accessToken: undefined,
@@ -19,6 +24,6 @@ const INITIAL_STATE: SessionContextType = {
 
   setAccessToken: () => 0,
   clearSession: () => 0,
-}
+};
 
-export const SessionContext = createContext(INITIAL_STATE)
+export const SessionContext = createContext(INITIAL_STATE);
