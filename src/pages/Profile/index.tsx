@@ -38,7 +38,7 @@ function ProfilePage() {
   if (isLoading) return <Loading />;
 
   return (
-    <main className="bg-gray-150 flex-1 text-white w-full flex">
+    <main className="bg-gray-150 flex-1 text-white w-full">
       <section className="container flex flex-col">
         <article className="flex w-full justify-between">
           <div className="max-h-[85px] w-full flex gap-12 items-center py-12 border-b border-white mb-24">

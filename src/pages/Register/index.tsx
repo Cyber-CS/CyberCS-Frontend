@@ -81,7 +81,7 @@ function RegisterPage() {
             <Input.LoginField
               id="username"
               label="Usuário"
-              placeholder="Digite seu usuário"
+              placeholder="Digite o usuário"
               {...formRegister("username")}
               error={!!errors.username}
               message={errors.username?.message}
@@ -89,7 +89,7 @@ function RegisterPage() {
             <Input.LoginField
               id="name"
               label="Nome"
-              placeholder="Digite seu nome"
+              placeholder="Digite o nome"
               {...formRegister("name")}
               error={!!errors.name}
               message={errors.name?.message}
@@ -97,7 +97,7 @@ function RegisterPage() {
             <Input.LoginField
               id="email"
               label="Email"
-              placeholder="Digite seu email"
+              placeholder="Digite o email"
               {...formRegister("email")}
               error={!!errors.email}
               message={errors.email?.message}
@@ -106,7 +106,7 @@ function RegisterPage() {
               id="password"
               label="Senha"
               type="password"
-              placeholder="Digite sua senha"
+              placeholder="Digite a senha"
               {...formRegister("password")}
               error={!!errors.password}
               message={errors.password?.message}

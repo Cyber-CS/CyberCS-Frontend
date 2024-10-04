@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Barcode, Info } from "@phosphor-icons/react";
+import { Barcode, BellSimpleRinging, Info } from "@phosphor-icons/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -8,15 +8,17 @@ import { Button, Input, Loading } from "~/components";
 import { useSearchMutation, useSendEmailNewSearchMutation } from "~/hooks";
 import { useSession } from "~/session";
 
-function NewSearchPage() {
+function AutomaticNewSearchPage() {
   return (
     <main className="bg-gray-150 flex-1 text-white w-full ">
       <div className="container flex flex-col gap-48">
         <section className="flex gap-12 items-center py-12 border-b border-white">
-          <Barcode size={48} />
+          <BellSimpleRinging size={48} />
           <article className="">
-            <h1 className="text-24 font-semibold">Nova varredura</h1>
-            <h2>Realizar nova procura</h2>
+            <h1 className="text-24 font-semibold">
+              Configurar nova varredura automática
+            </h1>
+            <h2>Crie uma nova varredura automática</h2>
           </article>
         </section>
         <section className="w-full h-full bg-gray-300 rounded-8 p-24">
@@ -129,4 +131,4 @@ const searchSchema = z.object({
 
 export type SearchFields = z.infer<typeof searchSchema>;
 
-export { NewSearchPage as Component };
+export { AutomaticNewSearchPage as Component };

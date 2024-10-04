@@ -19,6 +19,10 @@ export const router = createBrowserRouter([
             lazy: () => import("./pages/NewSearch/index"),
           },
           {
+            path: "/automatic-new-search",
+            lazy: () => import("./pages/AutomaticNewSearch/index"),
+          },
+          {
             path: "/result/:searchId",
             lazy: () => import("./pages/Result/index"),
           },
