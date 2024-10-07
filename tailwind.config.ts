@@ -66,6 +66,7 @@ export default {
       white: "#FFFFFF",
       black: "#000000",
       gray: {
+        30: "#F3F3F3",
         50: "#C7C7C7",
         100: "#797976",
         150: "#9d9d9d",

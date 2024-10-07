@@ -66,7 +66,7 @@ const SearchForm = () => {
         threats: [],
         searchName: getValues("name"),
       });
-      navigate(`/result/${data.searchId}`);
+      navigate(`/manual-result/${data.searchId}`);
     }
     if (isErrorSearch) {
       reset();
@@ -116,7 +116,7 @@ const SearchForm = () => {
         varredura automática.
       </span>
 
-      <Button label="Realizar nova varredura" className="hover:bg-gray-800" />
+      <Button label="Realizar nova varredura" />
     </form>
   );
 };

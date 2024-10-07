@@ -1,5 +1,4 @@
 import { cx } from "class-variance-authority";
-import { ModalGeneric } from "../Dialog";
 
 export const Loading = () => {
   return (
@@ -18,7 +17,9 @@ export const Loading = () => {
       >
         <div className="flex flex-col items-center p-24 rounded-48">
           <h1 className="text-48 font-bold text-white">Carregando</h1>
-          <span className="text-20 -mt-8 font-semibold text-white mb-8">Aguarde um momento</span>
+          <span className="text-20 -mt-8 font-semibold text-white mb-8">
+            Aguarde um momento
+          </span>
           <div className="w-48 h-48 rounded-full animate-spin border-y border-solid border-white border-t-transparent"></div>
         </div>
       </div>

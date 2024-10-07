@@ -16,9 +16,10 @@ export const Button = ({
     <button
       type="submit"
       className={cx([
-        "bg-gray-700 w-full p-12 mt-12 text-white rounded-8",
+        "w-full p-12 mt-12 rounded-8",
+        "bg-gray-400 text-white",
         "transition-colors duration-300",
-        "hover:bg-gray-800",
+        "hover:bg-gray-700",
         className,
       ])}
       {...props}

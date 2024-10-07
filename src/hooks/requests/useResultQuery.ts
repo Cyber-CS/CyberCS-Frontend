@@ -22,7 +22,7 @@ export function useResultQuery({ searchId }: Params) {
     queryKey: ["result", searchId],
     retry: false,
     queryFn: async () => {
-      const { data, error, response } = await api.GET("/result", {
+      const { data, error, response } = await api.GET("/manual-result", {
         params: {
           query: {
             searchId,

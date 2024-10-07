@@ -99,7 +99,7 @@ function ProfilePage() {
                         <div className="flex flex-col leading-normal w-full">
                           <TitleBadge title="Encontrado em" />
                           <>
-                            {foundIn.map((item) => (
+                            {foundIn?.map((item) => (
                               <>
                                 {item === "github" && (
                                   <GithubLogo className="w-64" />
@@ -117,7 +117,7 @@ function ProfilePage() {
                       </li>
                       <button className="max-lg:mt-16">
                         <Link
-                          to={`/result/${searchId}`}
+                          to={`/manual-result/${searchId}`}
                           className="text-nowrap lg:ml-auto flex gap-12 h-fit w-fit items-center bg-gray-400 rounded-12 px-24 py-8 text-white font-medium"
                         >
                           Ver detalhes

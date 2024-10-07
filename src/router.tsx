@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
             lazy: () => import("./pages/AutomaticNewSearch/index"),
           },
           {
-            path: "/result/:searchId",
+            path: "/manual-result/:searchId",
             lazy: () => import("./pages/Result/index"),
           },
           {
