@@ -2,37 +2,32 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "~/services";
 
 interface Params {
-  searchId: string;
-  page: number;
+  userId: string;
 }
 
-interface Result {
-  content: string;
-  filters: string[];
-  frequency: string;
+interface Response {
   name: string;
   registerDate: string;
-  response: string[];
-  _id: string;
+  content: string;
+  length: number;
 }
 
-
-export function useResultQuery({ searchId }: Params) {
+export function useAlertsByUserQuery({ userId }: Params) {
   const query = useQuery({
     refetchOnWindowFocus: false,
     refetchOnMount: false,
-    queryKey: ["result", searchId],
+    queryKey: ["alertsByUser"],
     retry: false,
     queryFn: async () => {
-      const { data, error, response } = await api.GET("/manual-result", {
+      const { data, error, response } = await api.GET("/monitor-alerts", {
         params: {
           query: {
-            searchId,
+            userId,
           },
         },
       });
       if (data) {
-        return data as Result;
+        return data as Response[];
       }
       throw { error, code: response.status };
     },

@@ -7,21 +7,22 @@ interface Params {
 
 interface Results {
   searchId: string;
+  searchType: "manual" | "automatica";
   name: string;
   content: string;
   length: number;
   registerDate: string;
-  foundIn: string[]
+  foundIn: string[];
 }
 
 export function useResultsByUserQuery({ userId }: Params) {
   const query = useQuery({
     refetchOnWindowFocus: false,
     refetchOnMount: "always",
-    queryKey: ["resultsByUser", userId],
+    queryKey: ["manualResultsByUser", userId],
     retry: false,
     queryFn: async () => {
-      const { data, error, response } = await api.GET("/results-by-user", {
+      const { data, error, response } = await api.GET("/manual-results-by-user", {
         params: {
           query: {
             userId,
@@ -35,4 +36,3 @@ export function useResultsByUserQuery({ userId }: Params) {
 
   return { ...query };
 }
-

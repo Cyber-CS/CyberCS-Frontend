@@ -15,6 +15,8 @@ import { cx } from "class-variance-authority";
 import { useState } from "react";
 import { CodeModal } from "./CodeModal";
 import { ModalGeneric } from "~/components/Dialog";
+import { useNavigate } from "react-router-dom";
+import { useGeneratePDF } from "~/hooks";
 
 type SearchDataProps = {
   repositoryName: string;
@@ -41,6 +43,7 @@ function ResultPage() {
 
   const { data: dataResult, isFetching: isFetchingResult } = useResultQuery({
     searchId: id,
+    page: 0 // Removendo a lógica de paginação, forçando para a página 0
   });
 
   function escapeRegExp(string: string) {
@@ -65,10 +68,20 @@ function ResultPage() {
     });
   };
 
+  const generatePDF = useGeneratePDF("pdfContent");
+
+  const navigate = useNavigate();
+
+  const resultsData = searchData;
+
+  const handleViewDashboard = () => {
+    navigate("/result-dashboard", { state: { results: resultsData } });
+  };
+
   if (isFetchingResult) return <Loading />;
 
   return (
-    <main className="bg-gray-150 flex-1 text-white w-full">
+    <main className="bg-gray-150 flex-1 text-white w-full" id="pdfContent">
       <div className="container flex flex-col gap-48 py-32">
         <section className="flex gap-12 items-center py-12 border-b border-white">
           <Flower size={48} />
@@ -77,6 +90,14 @@ function ResultPage() {
             <h2>{`${searchData.length} `} resultados encontrados</h2>
           </article>
         </section>
+        <div className="flex gap-12">
+          <Button onClick={() => handleViewDashboard()}>
+            Visualizar Dashboard
+          </Button>
+          <Button onClick={generatePDF}>
+            Exportar como PDF
+          </Button>
+        </div>
         <section className="w-full h-full bg-gray-100 rounded-8 p-24 flex flex-col gap-32">
           <article>
             <div className="flex md:items-center md:gap-32 mb-12 flex-col md:flex-row">

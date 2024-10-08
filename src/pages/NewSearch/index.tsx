@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Button, Input, Loading } from "~/components";
-import { useSearchMutation } from "~/hooks";
+import { useSearchMutation, useSendEmailNewSearchMutation } from "~/hooks";
 import { useSession } from "~/session";
 
 function NewSearchPage() {
@@ -33,14 +33,17 @@ const SearchForm = () => {
   const {
     mutate: newSearch,
     data,
-    isSuccess,
-    // isError,
-    isPending,
+    isSuccess: isSuccessSearch,
+    isError: isErrorSearch,
+    isPending: isPendingSearch,
   } = useSearchMutation();
+  const { mutate: sendEmail, isPending: isPendingSendEmail } =
+    useSendEmailNewSearchMutation();
 
   const {
     register,
     setValue,
+    getValues,
     reset,
     formState: { errors },
     handleSubmit,
@@ -49,19 +52,28 @@ const SearchForm = () => {
   const onSubmit = handleSubmit(
     async (fields) => {
       newSearch(fields);
-      reset();
     },
     (error) => console.error(error)
   );
 
   useEffect(() => {
     setValue("userId", user.id as string);
-    if (isSuccess) {
-      navigate(`/result/${data.searchId}`);
+    if (isSuccessSearch) {
+      sendEmail({
+        userEmail: user.email as string,
+        userName: user.name as string,
+        // content: getValues("content"),
+        threats: [],
+        searchName: getValues("name"),
+      });
+      navigate(`/manual-result/${data.searchId}`);
     }
-  }, [isSuccess]);
+    if (isErrorSearch) {
+      reset();
+    }
+  }, [isSuccessSearch, isErrorSearch]);
 
-  if (isPending) return <Loading />;
+  if (isPendingSearch || isPendingSendEmail) return <Loading />;
 
   return (
     <form className="space-y-12 w-full flex flex-col" onSubmit={onSubmit}>
@@ -74,7 +86,6 @@ const SearchForm = () => {
         {...register("name")}
       />
       <div className="flex flex-col lg:flex-row w-full lg:items-center gap-12">
-       
         <fieldset className="flex gap-44 items-center w-full">
           <label htmlFor="filter" className="text-nowrap text-14 font-bold">
             Tipo de procura
@@ -98,13 +109,14 @@ const SearchForm = () => {
         inputClassName="!min-h-256 placeholder:-translate-y-108"
         {...register("content")}
       />
-      <span className="w-full justify-end flex gap-12 text-14">
-        <Info size={24} />
-        Esta é uma varredura manual. Para salvar resultados e enviar
-        notificações, utilize a varredura automática.
+      <span className="w-full max-w-[70%] justify-end flex gap-12 text-14 self-end">
+        <Info size={24} className="min-w-fit" />
+        Esta é uma varredura manual, uma cópia dos resultados será enviado ao
+        seu email. Para salvar resultados e enviar notificações, utilize a
+        varredura automática.
       </span>
 
-      <Button label="Realizar nova varredura" className="hover:bg-gray-800" />
+      <Button label="Realizar nova varredura" />
     </form>
   );
 };

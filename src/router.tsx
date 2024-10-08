@@ -19,8 +19,16 @@ export const router = createBrowserRouter([
             lazy: () => import("./pages/NewSearch/index"),
           },
           {
-            path: "/result/:searchId",
+            path: "/automatic-new-search",
+            lazy: () => import("./pages/AutomaticNewSearch/index"),
+          },
+          {
+            path: "/manual-result/:searchId",
             lazy: () => import("./pages/Result/index"),
+          },
+          {
+            path: "/result-dashboard",
+            lazy: () => import("./pages/Result/ResultDashboard"),
           },
           {
             path: "/profile",
@@ -33,6 +41,26 @@ export const router = createBrowserRouter([
           {
             path: "/user-management",
             lazy: () => import("./pages/UserManagement/index"),
+          },
+          {
+            path: "/virus-total",
+            lazy: () => import("./pages/Virustotal/VirusTotalPage"), 
+          },
+          {
+            path: "/hibp",
+            lazy: () => import("./pages/HIBP/HIBPCheckPage"), 
+          },
+          {
+            path: "/gerenciar-empresas", 
+            lazy: () => import("./pages/Empresa/EmpresaPage"),
+          },
+          {
+            path: "/searh-empresa", 
+            lazy: () => import("./pages/Empresa/SearchByHashPage"),
+          },
+          {
+            path: "/recent-results", 
+            lazy: () => import("./pages/Empresa/RecentResultsPage"),
           },
         ],
       },

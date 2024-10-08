@@ -1,11 +1,5 @@
-import {
-  ArrowRight,
-  Barcode,
-  Envelope,
-  GitlabLogo,
-  User,
-} from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
+import { Barcode, Envelope, GitlabLogo, User } from "@phosphor-icons/react";
+
 import { Loading } from "~/components";
 import { useResultsByUserQuery } from "~/hooks";
 import { BitbucketLogo, GithubLogo } from "~/icons";
@@ -38,7 +32,7 @@ function ProfilePage() {
   if (isLoading) return <Loading />;
 
   return (
-    <main className="bg-gray-150 flex-1 text-white w-full flex">
+    <main className="bg-gray-150 flex-1 text-white w-full">
       <section className="container flex flex-col">
         <article className="flex w-full justify-between">
           <div className="max-h-[85px] w-full flex gap-12 items-center py-12 border-b border-white mb-24">
@@ -64,70 +58,52 @@ function ProfilePage() {
           <h3 className="text-28 font-bold">Buscas recentes do usuário</h3>
           <ul className=" rounded-8">
             {data?.length !== 0 ? (
-              data?.map(
-                ({
-                  searchId,
-                  content,
-                  length,
-                  name,
-                  registerDate,
-                  foundIn,
-                }) => (
-                  <li className="border-b py-12 last:border-none">
-                    <ul className="flex gap-48 bg-gray-50 p-4 rounded-8 flex-col lg:flex-row text-black">
-                      <li className="w-full flex flex-col lg:flex-row gap-12">
-                        <div className="flex flex-col leading-normal w-full">
-                          <TitleBadge title="Nome da varredura" />
-                          <span className=" ">{name}</span>
-                        </div>
-                        <div className="flex flex-col leading-normal w-full">
-                          <TitleBadge title="String buscada" />
-                          <span>{content}</span>
-                        </div>
-                        <div className="flex flex-col leading-normal w-full">
-                          <TitleBadge title="Data de varredura" />
-                          <span>
-                            {new Date(registerDate).toLocaleDateString("pt-BR")}
-                          </span>
-                        </div>
-                        <div className="flex flex-col leading-normal w-full">
-                          <TitleBadge title="Resultados encontrados" />
-                          <span>
-                            {!length ? "Nenhum resultado encontrado" : length}
-                          </span>
-                        </div>
-                        <div className="flex flex-col leading-normal w-full">
-                          <TitleBadge title="Encontrado em" />
-                          <>
-                            {foundIn.map((item) => (
-                              <>
-                                {item === "github" && (
-                                  <GithubLogo className="w-64" />
-                                )}
-                                {item === "gitlab" && (
-                                  <GitlabLogo className="w-64" />
-                                )}
-                                {item === "bitbucket" && (
-                                  <BitbucketLogo className="w-64" />
-                                )}
-                              </>
-                            ))}
-                          </>
-                        </div>
-                      </li>
-                      <button className="max-lg:mt-16">
-                        <Link
-                          to={`/result/${searchId}`}
-                          className="text-nowrap lg:ml-auto flex gap-12 h-fit w-fit items-center bg-gray-400 rounded-12 px-24 py-8 text-white font-medium"
-                        >
-                          Ver detalhes
-                          <ArrowRight size={20} weight="bold" />
-                        </Link>
-                      </button>
-                    </ul>
-                  </li>
-                )
-              )
+              data?.map(({ content, length, name, registerDate, foundIn }) => (
+                <li className="border-b py-12 last:border-none">
+                  <ul className="flex gap-48 bg-gray-50 p-4 rounded-8 flex-col lg:flex-row text-black">
+                    <li className="w-full flex flex-col lg:flex-row gap-12">
+                      <div className="flex flex-col leading-normal w-full">
+                        <TitleBadge title="Nome da varredura" />
+                        <span className=" ">{name}</span>
+                      </div>
+                      <div className="flex flex-col leading-normal w-full">
+                        <TitleBadge title="String buscada" />
+                        <span>{content}</span>
+                      </div>
+                      <div className="flex flex-col leading-normal w-full">
+                        <TitleBadge title="Data de varredura" />
+                        <span>
+                          {new Date(registerDate).toLocaleDateString("pt-BR")}
+                        </span>
+                      </div>
+                      <div className="flex flex-col leading-normal w-full">
+                        <TitleBadge title="Resultados encontrados" />
+                        <span>
+                          {!length ? "Nenhum resultado encontrado" : length}
+                        </span>
+                      </div>
+                      <div className="flex flex-col leading-normal w-full">
+                        <TitleBadge title="Encontrado em" />
+                        <>
+                          {foundIn?.map((item) => (
+                            <>
+                              {item === "github" && (
+                                <GithubLogo className="w-64" />
+                              )}
+                              {item === "gitlab" && (
+                                <GitlabLogo className="w-64" />
+                              )}
+                              {item === "bitbucket" && (
+                                <BitbucketLogo className="w-64" />
+                              )}
+                            </>
+                          ))}
+                        </>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              ))
             ) : (
               <li className="py-12">
                 <TitleBadge title="Nenhuma busca encontrada" />

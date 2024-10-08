@@ -5,6 +5,8 @@ import {
   MagnifyingGlass,
   SignOut,
   UserCircle,
+  ShieldCheck,
+  Fingerprint,
 } from "@phosphor-icons/react";
 import { Logo } from "~/icons";
 import { Link } from "~/components";
@@ -22,11 +24,21 @@ export const Header = ({
 
   const info = [
     {
+      icon: <Fingerprint size={24} />,
+      to: "/virus-total",
+      tip: "hover:after:content-['Domínio']",
+    },
+    {
+      icon: <ShieldCheck size={24} />,
+      to: "/hibp",
+      tip: "hover:after:content-['Email']",
+    },
+    {
       icon: <UserCircle size={24} />,
       to: "/profile",
       tip: "hover:after:content-['Perfil']",
     },
-
+    
     {
       icon: <House size={24} />,
       to: "/",
@@ -37,6 +49,7 @@ export const Header = ({
       to: "/new-search",
       tip: "hover:after:content-['Varredura']",
     },
+  
     {
       icon: <SignOut size={24} />,
       to: "#",
@@ -44,6 +57,7 @@ export const Header = ({
       onClick: onLogout,
     },
   ];
+
   return (
     <header className="flex gap-48 bg-gray-150 text-white border-b border-white">
       <section className="container py-12 flex justify-between items-center">

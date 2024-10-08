@@ -41,80 +41,59 @@ function UserManagement() {
 
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false);
-    navigate(0); // Reload the page after closing the success modal
+    navigate(0);
   };
 
-  const getRoleName = (role: string) => {
-    switch (role) {
-      case "1":
-        return "Admin";
-      case "0":
-        return "Usuário Comum";
-      default:
-        return "Desconhecido";
-    }
-  };
+  const tableTitles = ["Nome", "Username", "Email", "Permissão", "Ações"];
 
   if (isLoading || isPending) return <Loading />;
 
   return (
     <main className="flex flex-col flex-1 bg-gray-250">
       <section className="container">
-        <div className="py-12 text-white flex items-center border-b border-white mb-24">
+        <article className="py-12 text-white flex items-center border-b border-white mb-24">
           <Gear size={48} />
           <div className="ps-12 ">
             <h1 className="text-24 font-semibold">Gerenciamento de Usuários</h1>
             <h2>Lista de usuários registrados no sistema</h2>
           </div>
-        </div>
-        <div className="w-full p-12 shadow-lg rounded-8 mt-32 bg-gray-300 text-white">
-          <table className="w-full border border-gray-300">
-            <thead className="bg-gray-100">
+        </article>
+        <article className="w-full p-12 pb-0 shadow-lg rounded-8 mt-32 bg-gray-300 text-white">
+          <table className="w-full">
+            <thead className="bg-gray-400">
               <tr>
-                <th className="py-3 px-4 border-b bg-gray-400 text-start">
-                  Nome
-                </th>
-                <th className="py-3 px-4 border-b bg-gray-400 text-start">
-                  Username
-                </th>
-                <th className="py-3 px-4 border-b bg-gray-400 text-start">
-                  Email
-                </th>
-                <th className="py-3 px-4 border-b bg-gray-400 text-start">
-                  Permissão
-                </th>
-                <th className="py-3 px-4 border-b bg-gray-400 text-start">
-                  Ações
-                </th>
+                {tableTitles.map((title, index) => (
+                  <th className="py-3 px-4 border-b  text-start" key={index}>
+                    {title}
+                  </th>
+                ))}
               </tr>
             </thead>
-            <tbody className="">
+            <tbody>
               {users?.map((user) => (
                 <tr key={user._id} className="border-b last:border-none">
                   <td className="py-3 px-4">{user.name}</td>
                   <td className="py-3 px-4">{user.username}</td>
                   <td className="py-3 px-4">{user.email}</td>
-                  <td className="py-3 px-4">{getRoleName(user.role)}</td>
+                  <td className="py-3 px-4">
+                    {user.role === "1" ? "Admin" : "Usuário Comum"}
+                  </td>
                   <td className="py-3 px-4 text-right">
                     <Button
-                      onClick={() => handleDelete(user._id)}
+                      className="!my-6"
                       label="Deletar"
-                      className="hover:bg-red-800"
+                      onClick={() => handleDelete(user._id)}
                     />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
-
-        <div className="p-6">
-          <Button
-            onClick={() => navigate("/register")}
-            label="Criar Novo Usuário"
-            className="bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition"
-          />
-        </div>
+        </article>
+        <Button
+          onClick={() => navigate("/register")}
+          label="Criar Novo Usuário"
+        />
 
         {showSuccessModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

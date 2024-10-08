@@ -49,7 +49,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /result:
+  /manual-result:
     get:
       summary: Get search result
       parameters:
@@ -71,7 +71,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /results-by-user:
+  /manual-results-by-user:
     get:
       summary: Get results by user
       parameters:
