@@ -6,3 +6,4 @@ export { useRegisterMutation } from "./useRegisterMutation";
 export { useGetAllUsersQuery } from "./useGetAllUsersQuery";
 export { useDeleteMutation } from "./useDeleteMutation";
 export { useSendEmailNewSearchMutation } from "./useSendEmailNewSearchMutation";
+export { useAlertsByUserQuery } from "./useAlertsByUserQuery";

@@ -1,7 +1,7 @@
 import { AppWindow } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import { Button, Loading } from "~/components";
-import { useResultsByUserQuery } from "~/hooks";
+import { useAlertsByUserQuery, useResultsByUserQuery } from "~/hooks";
 import { useSession } from "~/session";
 
 export default function HomePage() {
@@ -18,28 +18,8 @@ export default function HomePage() {
     }
   );
 
-  const alertsMock = [
-    {
-      name: "Alerta 1",
-      registerDate: "2021-09-01T00:00:00",
-      searchType: "manual",
-      length: 6,
-    },
-    {
-      name: "Alerta 2",
-      registerDate: "2021-09-01T00:00:00",
-      searchType: "manual",
-      length: 12,
-    },
-    {
-      name: "Alerta 3",
-      registerDate: "2021-09-01T00:00:00",
-      searchType: "manual",
-      length: 43,
-    },
-  ];
 
-  if (isLoading) return <Loading />;
+  if (isLoading || isLoadingAlerts) return <Loading />;
   return (
     <main className="bg-gray-150 flex-1 text-white w-full ">
       <div className="container flex flex-col gap-48">
@@ -110,21 +90,21 @@ export default function HomePage() {
               <h3 className="font-semibold text-20 text-gray-700">
                 Alertas de vazamentos detectados
               </h3>
-              {alertsMock.map(
-                ({ name, registerDate, searchType, length }, index) => (
-                  <MaliciusWarningItem
-                    key={index}
-                    name={name}
-                    content={name}
-                    registerDate={registerDate}
-                    searchType={searchType}
-                    length={length}
-                  />
-                )
-              )}
-              {/* <p className="text-gray-600">
+              {dataAlerts?.map(({ name, registerDate, length }, index) => {
+              if (dataAlerts.length === 0) return (
+                <p className="text-gray-600">
                 Nenhum alerta de vazamento detectado
-              </p> */}
+              </p> 
+              )
+              return (
+                <MaliciusWarningItem
+                  key={index}
+                  name={name}
+                  registerDate={registerDate}
+                  length={length}
+                />
+              ))}}
+              
             </article>
             <article className="flex flex-col bg-[#d7e6d7] rounded-12 p-12 w-full min-h-[200px] border border-gray-800/20">
               <h3 className="font-semibold text-20 text-gray-700">
@@ -236,9 +216,7 @@ const MaliciusWarningItem = ({
   length,
 }: {
   name: string;
-  content: string;
   registerDate: string;
-  searchType: string;
   length: number;
 }) => {
   return (
