@@ -1,4 +1,4 @@
-import { AppWindow } from "@phosphor-icons/react";
+import { AppWindow, Gear, Fingerprint, ShieldCheck, UserCircle, MagnifyingGlass } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import { Button, Loading } from "~/components";
 import { useAlertsByUserQuery, useResultsByUserQuery } from "~/hooks";
@@ -20,6 +20,7 @@ export default function HomePage() {
 
 
   if (isLoading || isLoadingAlerts) return <Loading />;
+
   return (
     <main className="bg-gray-150 flex-1 text-white w-full ">
       <div className="container flex flex-col gap-48">
@@ -28,7 +29,7 @@ export default function HomePage() {
           <article>
             <h1 className="text-24 font-semibold">Home</h1>
             <h2>
-              Bem vindo de volta,{" "}
+              Bem-vindo de volta,{" "}
               <span className="capitalize font-semibold text-20">
                 {`${user?.name?.toLocaleLowerCase()}`}.
               </span>
