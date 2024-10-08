@@ -3,6 +3,7 @@ import { api } from "~/services";
 
 interface Params {
   searchId: string;
+  page: number;
 }
 
 interface Result {
@@ -14,6 +15,7 @@ interface Result {
   response: string[];
   _id: string;
 }
+
 
 export function useResultQuery({ searchId }: Params) {
   const query = useQuery({
