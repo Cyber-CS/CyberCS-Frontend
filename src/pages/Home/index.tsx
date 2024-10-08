@@ -1,4 +1,11 @@
-import { AppWindow, Gear, Fingerprint, ShieldCheck, UserCircle, MagnifyingGlass } from "@phosphor-icons/react";
+import {
+  AppWindow,
+  Gear,
+  Fingerprint,
+  ShieldCheck,
+  UserCircle,
+  MagnifyingGlass,
+} from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import { Button, Loading } from "~/components";
 import { useAlertsByUserQuery, useResultsByUserQuery } from "~/hooks";
@@ -17,7 +24,6 @@ export default function HomePage() {
       userId: user.id as string,
     }
   );
-
 
   if (isLoading || isLoadingAlerts) return <Loading />;
 
@@ -92,20 +98,21 @@ export default function HomePage() {
                 Alertas de vazamentos detectados
               </h3>
               {dataAlerts?.map(({ name, registerDate, length }, index) => {
-              if (dataAlerts.length === 0) return (
-                <p className="text-gray-600">
-                Nenhum alerta de vazamento detectado
-              </p> 
-              )
-              return (
-                <MaliciusWarningItem
-                  key={index}
-                  name={name}
-                  registerDate={registerDate}
-                  length={length}
-                />
-              ))}}
-              
+                if (dataAlerts.length === 0)
+                  return (
+                    <p className="text-gray-600">
+                      Nenhum alerta de vazamento detectado
+                    </p>
+                  );
+                return (
+                  <MaliciusWarningItem
+                    key={index}
+                    name={name}
+                    registerDate={registerDate}
+                    length={length}
+                  />
+                );
+              })}
             </article>
             <article className="flex flex-col bg-[#d7e6d7] rounded-12 p-12 w-full min-h-[200px] border border-gray-800/20">
               <h3 className="font-semibold text-20 text-gray-700">
